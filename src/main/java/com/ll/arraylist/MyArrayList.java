@@ -1,5 +1,7 @@
 package com.ll.arraylist;
 
+import java.util.ArrayList;
+
 public class MyArrayList<T> {
     private int capacity = 1;
     private int size = 0;
