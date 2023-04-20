@@ -1,4 +1,4 @@
-package com.ll.exam1;
+package com.ll.arraylist;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +26,7 @@ public class MyArrayListTests {
         assertThat(list.size()).isEqualTo(1);
     }
 
+
     @Test
     @DisplayName("get()")
     void t3() {
@@ -37,7 +38,7 @@ public class MyArrayListTests {
     }
 
     @Test
-    @DisplayName("get()")
+    @DisplayName("remove()")
     void t4() {
         list.add("사과");
         list.add("포도");
@@ -74,6 +75,30 @@ public class MyArrayListTests {
         list.add("자두");
         list.clear();
         assertThat(0).isEqualTo(list.size());
+    }
+
+    @Test
+    @DisplayName("add(int index, T o)")
+    void t8() {
+        list.add("사과");
+        list.add("포도");
+        list.add("자두");
+        list.add(1,"메론");
+
+        assertThat(list.get(1)).isEqualTo("메론");
+        assertThat(list.get(3)).isEqualTo("자두");
+    }
+
+    @Test
+    @DisplayName("add(int index, T o)")
+    void t9() {
+        list.add("사과");
+        list.add("포도");
+        list.add("자두");
+        list.addFirst("메론");
+
+        assertThat(list.get(0)).isEqualTo("메론");
+        assertThat(list.get(3)).isEqualTo("자두");
     }
 
 

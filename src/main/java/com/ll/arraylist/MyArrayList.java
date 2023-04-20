@@ -1,4 +1,4 @@
-package com.ll.exam1;
+package com.ll.arraylist;
 
 public class MyArrayList<T> {
     private int capacity = 1;
@@ -9,11 +9,28 @@ public class MyArrayList<T> {
         return size;
     }
 
-    public boolean add(T data){
+    public boolean add(T o){
         if(capacity == size)
             expand();
 
-        this.data[size++] = data;
+        data[size++] = o;
+        return true;
+    }
+
+    public void addFirst(T o) {
+        add(0, o);
+    }
+
+    public boolean add(int index, T o){
+        if(capacity == size)
+            expand();
+
+        for(int i=size; i>index; i--){
+            data[i] = data[i - 1];
+        }
+        data[index] = o;
+        size++;
+
         return true;
     }
 
@@ -32,17 +49,17 @@ public class MyArrayList<T> {
         return value;
     }
 
-    public boolean contains(String data) {
+    public boolean contains(T o) {
         for(int i=0; i<size; i++){
-            if(this.data[i] == data)
+            if(data[i] == o)
                 return true;
         }
         return false;
     }
 
-    public long indexOf(String value) {
+    public long indexOf(T o) {
         for(int i=0; i<size; i++){
-            if(data[i].equals(value))
+            if(data[i].equals(o))
                 return i;
         }
         return -1;
@@ -53,23 +70,6 @@ public class MyArrayList<T> {
             remove(size - 1);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void expand() {
         capacity *= 2;
 
