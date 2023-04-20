@@ -1,12 +1,8 @@
 package com.ll.hashmap;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-
 import static org.assertj.core.api.Assertions.*;
 
 public class MyHashMapTests {
@@ -84,5 +80,24 @@ public class MyHashMapTests {
         map.clear();
         assertThat(0).isEqualTo(map.size());
         assertThat(map.isEmpty()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("해시값 확인")
+    void t9() {
+        map.getHashIndex("key1");
+        map.getHashIndex("key1");
+        map.getHashIndex("key2");
+        map.getHashIndex("key3");
+        map.getHashIndex("key4");
+        map.getHashIndex("key5");
+        map.getHashIndex("key6");
+        map.getHashIndex("key7");
+        map.getHashIndex("key8");
+        map.getHashIndex("key9");
+        map.getHashIndex("key10");
+        map.getHashIndex("key11");
+        map.getHashIndex("key12");
+        map.getHashIndex("key11");
     }
 }

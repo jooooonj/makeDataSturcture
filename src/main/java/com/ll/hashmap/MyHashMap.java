@@ -1,66 +1,93 @@
 package com.ll.hashmap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MyHashMap<K, V> {
-    private List<K> key;
-    private List<V> value;
+
+    private int size = 0;
+    private int capacity = 16;
+    private Object[] value;
+
 
     public MyHashMap(){
-        key = new ArrayList<>();
-        value = new ArrayList<>();
+        value = new Object[capacity];
+    }
+
+    static final int hash(Object key) { int h; return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16); }
+
+    public int getHashIndex(K k){
+        return hash(k) % capacity;
+    }
+
+    private void expand() {
+        capacity *= 2;
+
+        Object[] tmp = new Object[capacity];
+
+        relocate(tmp, value);
+        value = new Object[capacity];
+        relocate(value, tmp);
+    }
+
+    private void relocate(Object[] tmp, Object[] data) {
+        for(int i=0; i<size; i++){
+            tmp[i] = data[i];
+        }
     }
 
     public int size() {
-        return key.size();
+        return size;
     }
 
     public void put(K k, V v) {
-        if(key.contains(k)){
-            value.remove(key.indexOf(k));
-            value.add(key.indexOf(k), v);
-            return;
-        }
+        int index = getHashIndex(k);
 
-        key.add(k);
-        value.add(v);
+        if(value[index]==null)
+            size++;
+
+        value[index] = v;
     }
 
     public V get(K k) {
-        if(key.contains(k)){
-            return value.get(key.indexOf(k));
-        }
+        int index = getHashIndex(k);
 
-        return null;
+        return (V) value[index];
     }
 
     public V remove(K k) {
-        if (!key.contains(k)) {
-            return null;
+        int index = getHashIndex(k);
+
+        V value = (V) this.value[index];
+
+        if(value!=null){
+            this.value[index] = null;
+            size--;
         }
 
-        V v = value.get(key.indexOf(k));
-        key.remove(key.indexOf(k));
-        value.remove(v);
-
-        return v;
+        return value;
     }
 
     public boolean containsKey(K k) {
-        return key.contains(k);
+        int index = getHashIndex(k);
+
+        return value[index] != null;
     }
 
     public boolean containsValue(V v) {
-        return value.contains(v);
+        //검색 알고리즘 사용하면 더 좋을듯
+        for (Object o : value) {
+            V val = (V)o;
+            if(val==null) continue;
+            if(val.equals(v))
+                return true;
+        }
+        return false;
     }
 
     public boolean isEmpty() {
-        return key.size()==0 && value.size()==0;
+        return size==0;
     }
 
     public void clear() {
-        key.clear();
-        value.clear();
+        value = new Object[capacity];
+        size = 0;
     }
 }
